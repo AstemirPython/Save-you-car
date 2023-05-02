@@ -58,13 +58,13 @@ class Lines(sprite.Sprite):
         mw.blit(self.image,(self.rect.x,self.rect.y))
 
 '''Спрайты'''
-car_gg = Car('car.png',550,450,10)
+car_gg = Car('car.png',460,450,7)
 car1 = Car('car1.png',randint(180,730),-30,15)
 car2 = Car('car2.png',randint(180,730),-30,10)
 car3 = Car_h('car3.png',randint(180,730),-30,5)
 line2 = Lines('line.jpg',650,400,5)
 line3 = Lines('line.jpg',650,600,5)
-line = Lines('line.jpg',650,30,20)
+line = Lines('line.jpg',650,30,5)
 line1 = Lines('line.jpg',650,200,5)
 
 line4 = Lines('line.jpg',350,400,5)
@@ -135,18 +135,35 @@ while run:
 
     if sprite.collide_rect(car_gg,car1) or sprite.collide_rect(car_gg,car2) or sprite.collide_rect(car_gg,car3):
         sound3.play()
+    if line.rect.y == 735:
+        line.rect.y = -50
+
+    if line1.rect.y == 735:
+        line1.rect.y = -50
+
+    if line2.rect.y == 735:
+        line2.rect.y = -50
+
+    if line3.rect.y == 735:
+        line3.rect.y = -50
+
+    if line4.rect.y == 735:
+        line4.rect.y = -50
+
+    if line5.rect.y == 735:
+        line5.rect.y = -50
+
+    if line6.rect.y == 735:
+        line6.rect.y = -50
+
+    if line7.rect.y == 735:
+        line7.rect.y = -50
+    
+
+    if line.rect.y == -80:
+        line.rect.y = 745
 
 
-    if move_down == True and car_gg.rect.y <= 580:
-        car_gg.rect.y += car1.speed
-        line.rect.y -= line.speed
-        line1.rect.y -= line.speed
-        line2.rect.y -= line.speed
-        line3.rect.y -= line.speed
-        line4.rect.y -= line.speed
-        line5.rect.y -= line.speed
-        line6.rect.y -= line.speed
-        line7.rect.y -= line.speed
 
     if move_left == True and car_gg.rect.x >= 180:
         car_gg.rect.x -= car_gg.speed
@@ -155,7 +172,6 @@ while run:
         car_gg.rect.x += car_gg.speed
     
     if move_up == True and car_gg.rect.y >= 5:
-        car_gg.rect.y -= car1.speed
         line.rect.y += line.speed
         line1.rect.y += line.speed
         line2.rect.y += line.speed
@@ -170,10 +186,6 @@ while run:
     car2.rect.y += car2.speed
     car3.rect.y += car3.speed
     
-    car_gg.reset()
-    car1.reset()
-    car2.reset()
-    car3.reset()
     line.reset()
     line1.reset()
     line2.reset()
@@ -183,5 +195,9 @@ while run:
     line5.reset()
     line6.reset()
     line7.reset()
+    car_gg.reset()
+    car1.reset()
+    car2.reset()
+    car3.reset()
     display.update()
     clock.tick(60)
