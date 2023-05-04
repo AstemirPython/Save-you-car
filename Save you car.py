@@ -35,6 +35,16 @@ class Car(sprite.Sprite):
         self.rect.y = rect_y
     def reset(self):
         mw.blit(self.image,(self.rect.x,self.rect.y))
+class Button(sprite.Sprite):
+    def __init__(self,image_player,rect_x,rect_y,speed):
+        super().__init__()
+        self.image = transform.scale(image.load(image_player),(250,100))
+        self.speed= speed
+        self.rect = self.image.get_rect()
+        self.rect.x = rect_x
+        self.rect.y = rect_y
+    def reset(self):
+        mw.blit(self.image,(self.rect.x,self.rect.y))
 class Life(sprite.Sprite):
     def __init__(self,image_player,rect_x,rect_y,speed):
         super().__init__()
@@ -83,6 +93,7 @@ line5 = Lines('line.jpg',350,600,5)
 line6 = Lines('line.jpg',350,30,5)
 line7 = Lines('line.jpg',350,200,5)
 cb = font.render('Попробуйте снова!',True,(255,0,0))
+button = Button('startgame-transformed.png',370,450,0)
 ray = False
 avay = None
 bc = 0
@@ -92,18 +103,18 @@ while run:
     while ray != True:
         c = font.render('Добро пожаловать!',True,(255,0,0))
         a = font.render('Save you car',True,(255,0,0))
-        b = font.render('Чтобы начать игру нажмите "P"',True,(255,0,0))
         mw.blit(background,(0,0))
         mw.blit(a,(420,0))
         mw.blit(c,(380,100))
-        mw.blit(b,(320,200))
-        for e in event.get():
-            if e.type == QUIT:
+        button.reset()
+        for event1 in event.get():
+            if event1.type == MOUSEBUTTONDOWN and event1.button == 1:
+                x,y = event1.pos
+                if button.rect.collidepoint(x,y):
+                    ray = True
+            if event1.type == QUIT:
                 ray = True
                 run = False
-            elif e.type == KEYDOWN:
-                if e.key == K_p:
-                    ray = True
 
         display.update()
         clock.tick(45)
@@ -153,7 +164,7 @@ while run:
 
     if sprite.collide_rect(car_gg,car1) or sprite.collide_rect(car_gg,car2) or sprite.collide_rect(car_gg,car3):
         bc = 0
-        car_gg.rect.x = 950
+        car_gg.rect.x = 900
         sound3.play()
         health -= 1
 
@@ -228,6 +239,10 @@ while run:
     car2.reset()
     car3.reset()
     life1.reset()
+
+
+
+
     if health <= 0:
         mw.blit(background2,(0,0))
         mw.blit(cb,(350,300))
